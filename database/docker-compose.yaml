@@ -1,11 +1,14 @@
-version: "3"
+version: "3.8"
 services:
-  mongodb:
-    image: mongodb/mongodb-community-server:6.0-ubi8
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=user
-      - MONGO_INITDB_ROOT_PASSWORD=pass
+  mongo:
+    image: mongo
     volumes:
-      - type: bind
-        source: ./data
-        target: /data/db
+      - ./mongo-entrypoint:/docker-entrypoint-initdb.d:ro
+      - ./data:/data/db
+    container_name: mongodb-mern-video-app
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    env_file:
+      - ./.env
+    command: mongod
