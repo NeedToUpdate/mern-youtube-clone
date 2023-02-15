@@ -18,7 +18,9 @@ import { RouteError } from "@src/other/classes";
 import logger from "./util/logger";
 import { StatusCodes } from "http-status-codes/build/cjs/status-codes";
 
-import userRoute from "@src/routes/user";
+import userRoute from "@src/routes/user.route";
+import authRoute from "@src/routes/auth.route";
+import { getUserData } from "./middleware/getUserData";
 
 // **** Variables **** //
 
@@ -59,9 +61,14 @@ app.use((err: Error, _: Request, res: Response, next: NextFunction) => {
   return res.status(status).json({ error: err.message });
 });
 
+//auth handling
+
+app.use(getUserData);
+
 //routes
 
 app.use("/api/user", userRoute);
+app.use("/api/login", authRoute);
 
 // **** Export default **** //
 
