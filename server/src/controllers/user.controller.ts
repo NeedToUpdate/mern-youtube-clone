@@ -37,8 +37,9 @@ export async function getUserByUsernameHandler(req: Request<RetrieveUser>, res: 
 
 export async function getAllUsersHandler(req: Request<{}, {}, {}, ListQuery>, res: Response) {
   const { skip, take } = req.query;
+  //http params are always strings, but zod will make sure they're numeric
   try {
-    const users = await getAllUsers(skip, take);
+    const users = await getAllUsers(parseInt(skip), parseInt(take));
     return res.status(StatusCodes.CREATED).send({ status: "SUCCESS", users: users });
   } catch (e) {
     //if we cant get a list of users from the above function something must be wrong with the server
