@@ -20,6 +20,7 @@ import { StatusCodes } from "http-status-codes/build/cjs/status-codes";
 
 import userRoute from "@src/routes/user.route";
 import authRoute from "@src/routes/auth.route";
+import videoRoute from "@src/routes/video.route";
 import { getUserData } from "./middleware/getUserData";
 
 // **** Variables **** //
@@ -67,8 +68,12 @@ app.use(getUserData);
 
 //routes
 
+//best practices would warrant that the api is versioned, i.e. /api/v1/ just in case for expansion
+//in the future, with new frontends pointing at older apis
+
 app.use("/api/users", userRoute);
 app.use("/api/login", authRoute);
+app.use("/api/videos", videoRoute);
 
 // **** Export default **** //
 
