@@ -49,6 +49,7 @@ export async function getAllUsersHandler(req: Request<{}, {}, {}, ListQuery>, re
     const users = await getAllUsers(parseInt(skip), parseInt(take));
     return res.status(StatusCodes.OK).send({ status: "SUCCESS", users: users.map((user) => new UserDTO(user)) });
   } catch (e) {
+    logger.error(e);
     //if we cant get a list of users from the above function something must be wrong with the server
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(SOMETHING_WENT_WRONG_STRING);
   }

@@ -12,7 +12,7 @@ export async function getUserByUsername(username: User["username"]) {
 }
 
 export async function getAllUsers(skip: number, take: number) {
-  return UserModel.find({}, {}, { skip: skip, take: take }).exec();
+  return UserModel.find({}, {}, { skip: skip, take: take });
 }
 
 //you would also implement updateUser and deleteUser here, but that is not needed by the specs of the assignment
