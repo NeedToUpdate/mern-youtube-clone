@@ -11,3 +11,7 @@ export function getVideoByShortId(shortId: Video["shortId"]) {
 export async function getAllVideos(skip: number, take: number) {
   return VideoModel.find({}, {}, { skip: skip, take: take });
 }
+
+export async function searchVideosByText(query: string, skip: number, take: number) {
+  return VideoModel.find({ $text: { $search: query } }, {}, { skip: skip, take: take });
+}

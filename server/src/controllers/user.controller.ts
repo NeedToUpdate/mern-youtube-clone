@@ -17,7 +17,7 @@ export async function registerUserHandler(req: Request<{}, {}, RegisterUserBody>
 
   try {
     const user = await createUser({ username, password });
-    return res.status(StatusCodes.CREATED).send({ status: "SUCCESS", id: user.id });
+    return res.status(StatusCodes.CREATED).send({ status: "SUCCESS", data: user.id });
   } catch (e) {
     //best practices would have this call a error handler which would accept many kinds of errors and return different statuses
     //depending on the error. But for time and simplicity a simple 400 will do.
@@ -31,7 +31,7 @@ export async function getUserByUsernameHandler(req: Request<RetrieveUser>, res: 
   try {
     const user = await getUserByUsername(username);
     if (user) {
-      return res.status(StatusCodes.OK).send({ status: "SUCCESS", user: new UserDTO(user) });
+      return res.status(StatusCodes.OK).send({ status: "SUCCESS", data: new UserDTO(user) });
     } else {
       return res.status(StatusCodes.BAD_REQUEST).send({ status: "ERROR", message: USER_NOT_FOUND_ERROR });
     }
@@ -47,7 +47,7 @@ export async function getAllUsersHandler(req: Request<{}, {}, {}, ListQuery>, re
   //http params are always strings, but zod will make sure they're numeric
   try {
     const users = await getAllUsers(parseInt(skip), parseInt(take));
-    return res.status(StatusCodes.OK).send({ status: "SUCCESS", users: users.map((user) => new UserDTO(user)) });
+    return res.status(StatusCodes.OK).send({ status: "SUCCESS", data: users.map((user) => new UserDTO(user)) });
   } catch (e) {
     logger.error(e);
     //if we cant get a list of users from the above function something must be wrong with the server

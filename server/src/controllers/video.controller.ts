@@ -1,11 +1,11 @@
-import { createVideoFile, getAllVideos, getVideoByShortId } from "@src/services/video.service";
+import { createVideoFile, getAllVideos, getVideoByShortId, searchVideosByText } from "@src/services/video.service";
 import { getFilePathById } from "@src/util/misc";
 import { Request, Response } from "express";
 import formidable from "formidable";
 import { StatusCodes } from "http-status-codes";
 import fs from "fs";
 import logger from "@src/util/logger";
-import { DestroyVideoParams, RetrieveVideoParams, UpdateVideoBody, UpdateVideoParams } from "@src/schemas/video.schema";
+import { DestroyVideoParams, RetrieveVideoParams, SearchVideoQuery, UpdateVideoBody, UpdateVideoParams } from "@src/schemas/video.schema";
 import { VideoDTO } from "@src/dtos/video.dto";
 import { ListQuery } from "@src/schemas/crud.schema";
 import { CHUNK_SIZE, SOMETHING_WENT_WRONG_STRING } from "@src/constants/misc";
@@ -23,6 +23,7 @@ const ONLY_ONE_FILE_ALLOWED_ERROR = "Only one file can be uploaded at a time.";
 const MUST_INCLUDE_TITLE_ERROR = "No title provided.";
 const VIDEO_NOT_FOUND_ERROR = "No video found.";
 const VIDEO_NOT_USERS_ERROR = "This is not your video.";
+const STREAM_NEEDS_RANGE_ERROR = "Range not provided.";
 
 export async function uploadVideoHandler(req: Request, res: Response) {
   const user = res.locals.user;
@@ -114,8 +115,8 @@ export async function getAllVideosHandler(req: Request<{}, {}, {}, ListQuery>, r
   const { skip, take } = req.query;
   //http params are always strings, but zod will make sure they're numeric
   try {
-    const users = await getAllVideos(parseInt(skip), parseInt(take));
-    return res.status(StatusCodes.OK).send({ status: "SUCCESS", users: users.map((video) => new VideoDTO(video)) });
+    const videos = await getAllVideos(parseInt(skip), parseInt(take));
+    return res.status(StatusCodes.OK).send({ status: "SUCCESS", data: videos.map((video) => new VideoDTO(video)) });
   } catch (e) {
     logger.error(e);
     //if we cant get a list of users from the above function something must be wrong with the server
@@ -149,7 +150,7 @@ export async function streamVideoHandler(req: Request<RetrieveVideoParams>, res:
   const range = req.headers.range;
 
   if (!range) {
-    return res.status(StatusCodes.BAD_REQUEST).send({ status: "ERROR", message: SOMETHING_WENT_WRONG_STRING });
+    return res.status(StatusCodes.BAD_REQUEST).send({ status: "ERROR", message: STREAM_NEEDS_RANGE_ERROR });
   }
 
   const video = await getVideoByShortId(shortId);
@@ -174,6 +175,7 @@ export async function streamVideoHandler(req: Request<RetrieveVideoParams>, res:
     "Accept-Ranges": `bytes`,
     "Content-Length": contentLength,
     "Content-Type": `video/${video.extension}`,
+    "Cross-Origin-Resource-Policy": "cross-origin",
   };
 
   res.writeHead(StatusCodes.PARTIAL_CONTENT, headers);
@@ -184,4 +186,20 @@ export async function streamVideoHandler(req: Request<RetrieveVideoParams>, res:
   });
 
   stream.pipe(res);
+}
+
+export async function searchVideoHandler(req: Request<{}, {}, {}, SearchVideoQuery>, res: Response) {
+  const { skip, take, query } = req.query;
+  //http params are always strings, but zod will make sure they're numeric
+  try {
+    //best practice search would split this whole section into a microservice
+    //that would be cached for any common search terms, and wouldn't even touch the primary database, but search from
+    //a read replica. Also could be completely outsourced to elasticsearch or some other cloud provider.
+    const videos = await searchVideosByText(query, parseInt(skip), parseInt(take));
+    return res.status(StatusCodes.OK).send({ status: "SUCCESS", data: videos.map((video) => new VideoDTO(video)) });
+  } catch (e) {
+    logger.error(e);
+    //if we cant get a list of users from the above function something must be wrong with the server
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ status: "ERROR", message: SOMETHING_WENT_WRONG_STRING });
+  }
 }

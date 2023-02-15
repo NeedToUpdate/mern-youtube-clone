@@ -1,10 +1,9 @@
+import { MUST_BE_A_NUMBER_ERROR } from "@src/constants/misc";
 import { number, object, string, TypeOf } from "zod";
 
 //The basic generic crud methods are here, since in they only need generic properties that would be found on all objects
 
 //update and create schemas would be found in their proper .schema.ts files.
-
-const MUST_BE_A_NUMBER_ERROR = "This parameter must be a number.";
 
 export const listQuerySchema = {
   //best practices wold be to make sure only numeric values are passed here

@@ -1,7 +1,8 @@
-import { getModelForClass, prop, pre, Ref } from "@typegoose/typegoose";
+import { getModelForClass, prop, pre, Ref, index } from "@typegoose/typegoose";
 import { User } from "./user.model";
 import { nanoid } from "nanoid";
 
+@index({ title: "text", description: "text" })
 export class Video {
   @prop({ unique: true, default: () => nanoid(7) })
   public shortId: string;

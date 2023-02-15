@@ -1,3 +1,4 @@
+import { MUST_BE_A_NUMBER_ERROR } from "@src/constants/misc";
 import { object, string, TypeOf } from "zod";
 
 export const updateVideoSchema = {
@@ -30,3 +31,13 @@ export const RetrieveVideoParams = {
 };
 
 export type RetrieveVideoParams = TypeOf<typeof destroyVideoSchema.params>;
+
+export const searchVideoQuerySchema = {
+  query: object({
+    take: string().regex(/^\d+$/, MUST_BE_A_NUMBER_ERROR).optional().default("50"),
+    skip: string().regex(/^\d+$/, MUST_BE_A_NUMBER_ERROR).optional().default("0"),
+    query: string(),
+  }),
+};
+
+export type SearchVideoQuery = TypeOf<typeof searchVideoQuerySchema.query>;
