@@ -1,4 +1,4 @@
-import { createVideoFile, getAllVideos, getVideoByShortId, searchVideosByText } from "@src/services/video.service";
+import { createVideoFile, deleteVideoFile, getAllVideos, getVideoByShortId, searchVideosByText } from "@src/services/video.service";
 import { getFilePathById } from "@src/util/misc";
 import { Request, Response } from "express";
 import formidable from "formidable";
@@ -59,6 +59,7 @@ export async function uploadVideoHandler(req: Request, res: Response) {
     //then saves the video. But that is outside the scope of this project.
     const ext = file.originalFilename!.split(".").at(-1) || file.mimetype!.split("/").at(-1) || ".mp4"; //gets the last string in the array split by "."
 
+    //you would also want to create a thumbnail in various resolutions here and save those.
     const video = await createVideoFile({ author: user._id, title: fields.title, extension: ext });
 
     //you wouldn't want to save the videos to the same machine as the app.
@@ -135,6 +136,7 @@ export async function deleteVideoHandler(req: Request<DestroyVideoParams>, res: 
     if (video.author.toString() !== user._id) {
       return res.status(StatusCodes.FORBIDDEN).send({ status: "ERROR", message: VIDEO_NOT_USERS_ERROR });
     }
+    await deleteVideoFile({ shortId: video.shortId, extension: video.extension });
     video.delete();
     return res.status(StatusCodes.NO_CONTENT).end();
   } catch (e) {
