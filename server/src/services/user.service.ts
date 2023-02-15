@@ -7,9 +7,10 @@ export async function createUser(user: Omit<User, "comparePassword">) {
 }
 
 export async function getUserByUsername(username: User["username"]) {
+  console.log(username);
   return UserModel.findOne({ username });
 }
 
 export async function getAllUsers(skip: number, take: number) {
-  return UserModel.find({}, {}, { skip: skip, take: take });
+  return UserModel.find({}, {}, { skip: skip, take: take }).exec();
 }

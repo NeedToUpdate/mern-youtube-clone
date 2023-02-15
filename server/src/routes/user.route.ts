@@ -14,6 +14,6 @@ router.post(
 
 router.get("/", loginRequired, getAllUsersHandler);
 
-router.get("/:id", loginRequired, getUserByUsernameHandler);
+router.get("/:username", loginRequired, getUserByUsernameHandler);
 
 export default router;

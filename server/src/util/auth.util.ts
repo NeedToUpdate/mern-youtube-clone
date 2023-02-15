@@ -21,14 +21,6 @@ const Options = {
 
 // **** Functions **** //
 
-export function verify(token: string) {
-  try {
-    return jsonwebtoken.verify(token, envVars.JWT.Secret);
-  } catch {
-    return null;
-  }
-}
-
 /**
  * Get session data from request object (i.e. ISessionUser)
  */
@@ -77,9 +69,9 @@ function _sign(data: string | object | Buffer): Promise<string> {
  * Decrypt JWT and extract client data.
  */
 function _decode<T>(jwt: string): Promise<string | undefined | T> {
-  return new Promise((res, rej) => {
+  return new Promise((res) => {
     jsonwebtoken.verify(jwt, envVars.JWT.Secret, (err, decoded) => {
-      return err ? rej(Errors.Validation) : res(decoded as T);
+      return err ? res(undefined) : res(decoded as T);
     });
   });
 }

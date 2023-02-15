@@ -67,7 +67,7 @@ app.use(getUserData);
 
 //routes
 
-app.use("/api/user", userRoute);
+app.use("/api/users", userRoute);
 app.use("/api/login", authRoute);
 
 // **** Export default **** //
