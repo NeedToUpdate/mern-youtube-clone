@@ -28,3 +28,5 @@ yarn-debug.log*
 yarn-error.log*
 **/data/*
 **/data
+/server/videos/*
+!/server/videos/.gitkeep

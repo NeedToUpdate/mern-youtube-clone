@@ -13,7 +13,14 @@ export class Video {
   public description: string;
 
   @prop({ required: true, ref: () => User })
-  public owner: Ref<User>;
+  public author: Ref<User>;
+
+  //this would be bad practice in production, as you would want to covert all video files to a format
+  //the platform easily supports, has a low footprint, high quality, etc.
+  //but implementing a transcoder is not within the scope of this application, so we will just save the extension
+  //manually and leave it as is.
+  @prop({ default: "mp4" })
+  public extension: string;
 }
 
 export const VideoModel = getModelForClass(Video, {

@@ -11,7 +11,6 @@ const DB_DISCONNECT_STRING = "Disconnected from database.";
 
 export async function connectDatabase() {
   try {
-    logger.info(DB_URI);
     await mongoose.connect(DB_URI, { authSource: "admin", authMechanism: "SCRAM-SHA-256" });
     logger.info(DB_CONNECT_STRING);
   } catch (e) {
