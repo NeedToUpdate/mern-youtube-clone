@@ -21,6 +21,10 @@ export class Video {
   //manually and leave it as is.
   @prop({ default: "mp4" })
   public extension: string;
+
+  //needed for typescript
+  public createdAt: Date;
+  public updatedAt: Date;
 }
 
 export const VideoModel = getModelForClass(Video, {

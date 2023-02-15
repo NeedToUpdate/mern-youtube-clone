@@ -1,3 +1,4 @@
+import { SOMETHING_WENT_WRONG_STRING } from "@src/constants/misc";
 import { UserDTO } from "@src/dtos/user.dto";
 import { ListQuery } from "@src/schemas/crud.schema";
 import { RegisterUserBody, RetrieveUser } from "@src/schemas/user.schema";
@@ -10,7 +11,6 @@ import { StatusCodes } from "http-status-codes";
 // can be exported elsewhere for i18n
 const USER_CREATE_ERROR_STRING = "Invalid information provided.";
 const USER_NOT_FOUND_ERROR = "This user does not exist.";
-const SOMETHING_WENT_WRONG_STRING = "Something went wrong.";
 
 export async function registerUserHandler(req: Request<{}, {}, RegisterUserBody>, res: Response) {
   const { username, password } = req.body;
@@ -21,7 +21,7 @@ export async function registerUserHandler(req: Request<{}, {}, RegisterUserBody>
   } catch (e) {
     //best practices would have this call a error handler which would accept many kinds of errors and return different statuses
     //depending on the error. But for time and simplicity a simple 400 will do.
-    return res.status(StatusCodes.BAD_REQUEST).send(USER_CREATE_ERROR_STRING);
+    return res.status(StatusCodes.BAD_REQUEST).send({ status: "ERROR", message: USER_CREATE_ERROR_STRING });
   }
 }
 
@@ -33,12 +33,12 @@ export async function getUserByUsernameHandler(req: Request<RetrieveUser>, res: 
     if (user) {
       return res.status(StatusCodes.OK).send({ status: "SUCCESS", user: new UserDTO(user) });
     } else {
-      return res.status(StatusCodes.BAD_REQUEST).send(USER_NOT_FOUND_ERROR);
+      return res.status(StatusCodes.BAD_REQUEST).send({ status: "ERROR", message: USER_NOT_FOUND_ERROR });
     }
   } catch (e) {
     //best practices would have this call a error handler which would accept many kinds of errors and return different statuses
     //depending on the error. But for time and simplicity a simple 400 will do.
-    return res.status(StatusCodes.BAD_REQUEST).send(USER_NOT_FOUND_ERROR);
+    return res.status(StatusCodes.BAD_REQUEST).send({ status: "ERROR", message: USER_NOT_FOUND_ERROR });
   }
 }
 
@@ -51,8 +51,8 @@ export async function getAllUsersHandler(req: Request<{}, {}, {}, ListQuery>, re
   } catch (e) {
     logger.error(e);
     //if we cant get a list of users from the above function something must be wrong with the server
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(SOMETHING_WENT_WRONG_STRING);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ status: "ERROR", message: SOMETHING_WENT_WRONG_STRING });
   }
 }
 
-//you would also implement update and delete user handlers here, but that is not needed for the assignment
+//you would also implement update and delete user handlers here, but that is not needed for the project

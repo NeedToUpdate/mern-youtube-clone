@@ -16,6 +16,6 @@ router.get("/", loginRequired, getAllUsersHandler);
 
 router.get("/:username", loginRequired, getUserByUsernameHandler);
 
-//you would also want to implement the update and delete routes, but that is not needed for the specs of the assignment
+//you would also want to implement the update and delete routes, but that is not needed for the specs of the project
 
 export default router;

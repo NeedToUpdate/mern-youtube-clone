@@ -22,12 +22,4 @@ export const retrieveSchema = {
   }),
 };
 
-export type Retrieve = TypeOf<typeof retrieveSchema.params>;
-
-export const destroySchema = {
-  params: object({
-    id: string(),
-  }),
-};
-
-export type Destroy = TypeOf<typeof destroySchema.params>;
+export type RetrieveParams = TypeOf<typeof retrieveSchema.params>;
