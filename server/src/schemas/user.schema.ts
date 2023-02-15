@@ -27,5 +27,12 @@ export const registerUserSchema = {
       path: ["password"],
     }),
 };
-
 export type RegisterUserBody = TypeOf<typeof registerUserSchema.body>;
+
+export const retrieveUserSchema = {
+  params: object({
+    username: string(),
+  }),
+};
+
+export type RetrieveUser = TypeOf<typeof retrieveUserSchema.params>;
