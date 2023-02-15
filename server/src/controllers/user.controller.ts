@@ -53,3 +53,5 @@ export async function getAllUsersHandler(req: Request<{}, {}, {}, ListQuery>, re
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(SOMETHING_WENT_WRONG_STRING);
   }
 }
+
+//you would also implement update and delete user handlers here, but that is not needed for the assignment

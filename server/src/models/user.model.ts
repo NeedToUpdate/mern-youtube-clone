@@ -1,6 +1,9 @@
 import { compare, getHash } from "@src/util/crypto";
 import { getModelForClass, prop, pre } from "@typegoose/typegoose";
 
+//this model should also implement roles, emails, deletion markers, timestamps, verification markers, metadata, and so on
+//but none of that is needed for the assignment at hand
+
 @pre<User>("save", async function (next) {
   if (this.isNew || this.isModified("password")) {
     const hash = await getHash(this.password);
