@@ -6,6 +6,10 @@ import supertest, { SuperTest, Test } from "supertest";
 import request from "supertest";
 import { login } from "../utils/auth";
 
+//obviously you would want to make tests for every path of the routes
+//including the video and auth routes, but that is outside the scope
+//of this assignment
+
 describe("Testing Users", () => {
   let agent: SuperTest<Test>, jwtCookie: string;
   beforeAll((done) => {
