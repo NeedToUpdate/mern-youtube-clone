@@ -13,6 +13,7 @@ export function Button({ onClick = () => {}, children, className, disabled }: pr
     onClick();
   };
 
+  //best practices would be to add a list of colours here that then are just passed in as 'primary' 'danger' etc.
   return (
     <button disabled={disabled} type="button" className={` disabled:bg-gray-400 disabled:pointer-events-none p-2 rounded-md shadow-sm hover:translate-y-[-1px] ${className}`} onClick={onClickHandler}>
       {children}

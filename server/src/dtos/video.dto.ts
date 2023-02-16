@@ -9,12 +9,13 @@ export class VideoDTO extends BaseDTO {
   "shortId": string;
   "createdAt": string;
   "updatedAt": string;
-  "description": "wow my cat is cool";
+  "description": string;
   "constructor"(object: Video) {
     super(object);
     this.title = object.title;
     this.author = object.author.toString();
     this.shortId = object.shortId;
+    this.description = object.description;
     this.createdAt = object.createdAt.toLocaleString("en");
     this.updatedAt = object.updatedAt.toLocaleString("en");
   }

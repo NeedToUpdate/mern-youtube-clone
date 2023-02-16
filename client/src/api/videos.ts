@@ -22,3 +22,19 @@ export function uploadVideo({ formData, config }: { formData: FormData; config: 
     })
     .then((res) => res.data);
 }
+
+export function streamVideo(shortId: string) {
+  return axios.get(videosUri + `/${shortId}`);
+}
+
+export function getVideoById(shortId: string) {
+  return axios.get(videosUri + `/${shortId}/data`);
+}
+
+export function updateVideo(shortId: string, data: { title?: string; description: string }) {
+  return axios.patch(videosUri + `/${shortId}`, data);
+}
+
+export function deleteVideo(shortId: string) {
+  return axios.delete(videosUri + `/${shortId}`);
+}
