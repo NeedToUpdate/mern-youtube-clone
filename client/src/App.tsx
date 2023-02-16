@@ -1,24 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import { QueryClient, QueryClientProvider } from "react-query";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import EditVideoView from "./components/EditVideoView";
+import Home from "./components/Home";
+import Login from "./components/Login";
+import Navbar from "./components/Navbar";
+import Register from "./components/Register";
+import SingleVideoView from "./components/SingleVideoView";
+import Upload from "./components/Upload";
+import { UserContextProvider } from "./utils/UserProvider";
+import { VideoProvider } from "./utils/VideoContext";
+const queryClient = new QueryClient();
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <QueryClientProvider client={queryClient}>
+        <UserContextProvider>
+          <VideoProvider>
+            <Router>
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/signup" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/upload" element={<Upload />} />
+                <Route path="/watch/:id" element={<SingleVideoView />} />
+                <Route path="/edit/:id" element={<EditVideoView />} />
+              </Routes>
+            </Router>
+          </VideoProvider>
+        </UserContextProvider>
+      </QueryClientProvider>
     </div>
   );
 }
