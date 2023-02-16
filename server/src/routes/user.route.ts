@@ -1,4 +1,5 @@
 import { getAllUsersHandler, getUserByUsernameHandler, registerUserHandler } from "@src/controllers/user.controller";
+import { UserDTO } from "@src/dtos/user.dto";
 import { loginRequired } from "@src/middleware/loginRequired";
 import { registerUserSchema } from "@src/schemas/user.schema";
 import express from "express";
@@ -14,7 +15,7 @@ router.post(
 
 //should be also in the controller, but its small so we leave it here for now
 router.get("/me", loginRequired, (req, res) => {
-  return res.send(res.locals.user);
+  return res.send(new UserDTO(res.locals.user));
 });
 
 router.get("/:username", loginRequired, getUserByUsernameHandler);

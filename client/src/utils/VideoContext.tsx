@@ -1,4 +1,5 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
+import { getVideos } from "../api/videos";
 import { ActionMap, Video } from "./Types";
 
 //best practice would have you use a better more comprehensive library like Redux,
@@ -30,7 +31,7 @@ export const videoReducer = (state: VideoData, action: VideoActionMap) => {
     case VideoActions.Add:
       return { ...state, videos: state.videos.concat([action.payload.video]) };
     case VideoActions.Fetch:
-      return { ...state, videos: state.videos.concat(action.payload.videos), initialized: true };
+      return { ...state, videos: action.payload.videos, initialized: true };
     case VideoActions.Update:
       return {
         ...state,
@@ -60,6 +61,12 @@ const VideoContext = createContext<{ state: VideoData; dispatch: React.Dispatch<
 
 const VideoProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(videoReducer, { videos: [] as Video[], initialized: false });
+  useEffect(() => {
+    if (state.initialized) return;
+    getVideos().then((res) => {
+      dispatch({ type: VideoActions.Fetch, payload: { videos: res } });
+    });
+  }, []);
   return <VideoContext.Provider value={{ state, dispatch }}>{children}</VideoContext.Provider>;
 };
 

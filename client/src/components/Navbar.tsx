@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar";
 
 export default function Navbar() {
   return (
-    <div className="flex gap-5 w-full p-2 items-center bg-emerald-100">
+    <div className="flex gap-5 w-full p-2 items-center bg-emerald-100 shadow-md">
       <Link to="/" className="flex justify-center items-center gap-2">
         <img src="folder.png" className="App-logo" alt="logo" width={50} height={50} />
         <p className="text-3xl bold">

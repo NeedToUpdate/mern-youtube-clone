@@ -4,6 +4,9 @@ import { videosUri } from "../utils/URIs";
 
 export const getVideos = async (): Promise<Video[]> => {
   const res = await axios.get(videosUri);
-  console.log(res);
-  return res.data as Video[];
+  if (res.status === 200) {
+    return res.data.data as Video[];
+  } else {
+    return [] as Video[];
+  }
 };

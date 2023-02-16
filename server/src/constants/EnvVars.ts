@@ -31,5 +31,5 @@ export default {
     name: process.env.DB_NAME ?? "database",
     host: process.env.DB_HOST ?? "0.0.0.0",
   },
-  CORS_ORIGIN: process.env.CORS_ORIGIN ?? "http://localhost:3000",
+  CORS_ORIGIN: process.env.CORS_ORIGIN ?? "http://localhost:3001",
 } as const;
