@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../utils/UserContext";
 import SearchBar from "./SearchBar";
@@ -8,7 +8,6 @@ export default function Navbar() {
   const [authorized, setAuthorized] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    console.log(user);
     setAuthorized(user !== null);
   }, [user]);
   return (

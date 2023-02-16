@@ -1,5 +1,6 @@
 import VideoCarousel from "../videos/VideoCarousel";
 import { useVideoContext } from "../../utils/VideoContext";
+import React from "react";
 export default function Home() {
   const { state } = useVideoContext();
   return (

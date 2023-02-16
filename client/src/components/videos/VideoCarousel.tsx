@@ -7,6 +7,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 //a carousel from scratch, as it could be much better for the project's needs
 import { Carousel } from "react-responsive-carousel";
 import { CSSProperties } from "react";
+import React from "react";
 interface props {
   sorting: "popular" | "hot" | "trending"; //this is just a template, not actually implemented, but it can be added to the backend search function
   videos: Video[];

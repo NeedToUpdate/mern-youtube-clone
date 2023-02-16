@@ -10,6 +10,7 @@ interface IVideoPlayerProps {
 }
 
 const initialOptions = {
+  autoplay: false,
   controls: true,
   fluid: true,
   controlBar: {

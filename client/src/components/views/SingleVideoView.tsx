@@ -9,6 +9,7 @@ import { useUserContext } from "../../utils/UserContext";
 import { Button } from "../basic/Button";
 import EditVideoForm from "../forms/EditVideoForm.";
 import { useVideoContext, VideoActions } from "../../utils/VideoContext";
+import React from "react";
 
 export default function SingleVideoView() {
   const { id } = useParams();
@@ -31,7 +32,7 @@ export default function SingleVideoView() {
   }, [id, getVideo]);
 
   const videoJsOptions = {
-    autoplay: true,
+    autoplay: false,
     controls: true,
     responsive: true,
     fluid: true,
