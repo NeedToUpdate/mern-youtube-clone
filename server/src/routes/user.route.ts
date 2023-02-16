@@ -12,10 +12,14 @@ router.post(
   registerUserHandler
 );
 
-router.get("/", loginRequired, getAllUsersHandler);
+//should be also in the controller, but its small so we leave it here for now
+router.get("/me", loginRequired, (req, res) => {
+  return res.send(res.locals.user);
+});
 
 router.get("/:username", loginRequired, getUserByUsernameHandler);
 
+router.get("/", loginRequired, getAllUsersHandler);
 //you would also want to implement the update and delete routes, but that is not needed for the specs of the project
 
 export default router;
