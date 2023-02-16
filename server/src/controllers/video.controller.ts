@@ -148,9 +148,9 @@ export async function deleteVideoHandler(req: Request<DestroyVideoParams>, res: 
 export async function streamVideoHandler(req: Request<RetrieveVideoParams>, res: Response) {
   const { shortId } = req.params;
 
-  const range = req.headers.range;
+  const range = req.headers.range || "0";
 
-  if (!range) {
+  if (range == undefined) {
     return res.status(StatusCodes.BAD_REQUEST).send({ status: "ERROR", message: STREAM_NEEDS_RANGE_ERROR });
   }
 
@@ -165,7 +165,7 @@ export async function streamVideoHandler(req: Request<RetrieveVideoParams>, res:
 
   const fileSizeInBytes = fs.statSync(filePath).size;
 
-  const chunkStart = parseInt(range.replace(/\Dg/, "")); //remove any non-digit values
+  const chunkStart = parseInt(range.replace(/\D/g, "")); //remove any non-digit values
 
   const chunkEnd = Math.min(chunkStart + CHUNK_SIZE, fileSizeInBytes - 1); //make sure we don't try to read past the end
 
@@ -202,5 +202,22 @@ export async function searchVideoHandler(req: Request<{}, {}, {}, SearchVideoQue
     logger.error(e);
     //if we cant get a list of users from the above function something must be wrong with the server
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ status: "ERROR", message: SOMETHING_WENT_WRONG_STRING });
+  }
+}
+
+export async function getVideoHandler(req: Request<RetrieveVideoParams>, res: Response) {
+  const { shortId } = req.params;
+
+  try {
+    const video = await getVideoByShortId(shortId);
+    if (video) {
+      return res.status(StatusCodes.OK).send({ status: "SUCCESS", data: new VideoDTO(video) });
+    } else {
+      return res.status(StatusCodes.BAD_REQUEST).send({ status: "ERROR", message: VIDEO_NOT_FOUND_ERROR });
+    }
+  } catch (e) {
+    //best practices would have this call a error handler which would accept many kinds of errors and return different statuses
+    //depending on the error. But for time and simplicity a simple 400 will do.
+    return res.status(StatusCodes.BAD_REQUEST).send({ status: "ERROR", message: VIDEO_NOT_FOUND_ERROR });
   }
 }
