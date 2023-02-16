@@ -19,7 +19,7 @@ const VIDEO_MIME_TYPES = ["video/mp4", "video/mpeg", "video/webm"];
 
 //can be outsourced to a i18n library
 const INVALID_FILE_SUBMITTED_ERROR = "Invalid file submitted.";
-const ONLY_ONE_FILE_ALLOWED_ERROR = "Only one file can be uploaded at a time.";
+const ONLY_ONE_FILE_ALLOWED_ERROR = "Please upload one (1) file.";
 const MUST_INCLUDE_TITLE_ERROR = "No title provided.";
 const VIDEO_NOT_FOUND_ERROR = "No video found.";
 const VIDEO_NOT_USERS_ERROR = "This is not your video.";
@@ -70,7 +70,6 @@ export async function uploadVideoHandler(req: Request, res: Response) {
     //but if you were to have large files, it would be best to use multipart upload
     //and directly pipe it to a cloud storage like S3
     fs.rename(file.filepath, filePath, function (err) {
-      console.log(filePath);
       res.writeHead(StatusCodes.CREATED, {
         "Connection": "close",
         "Content-Type": "application/json",

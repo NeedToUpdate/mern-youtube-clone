@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../api/users";
+import { useUserContext } from "../../utils/UserContext";
 import { Button } from "../basic/Button";
 import { InputField } from "../basic/InputField";
 
@@ -9,6 +10,7 @@ interface props {
 }
 
 export default function LoginForm(props: props) {
+  const { user, refetch } = useUserContext();
   const navigate = useNavigate();
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [data, setData] = useState({
@@ -64,6 +66,7 @@ export default function LoginForm(props: props) {
           try {
             const res = await loginUser(data);
             if (res.status === 200) {
+              refetch();
               navigate("/");
             }
           } catch (e) {

@@ -7,7 +7,6 @@ export async function createUser(user: Omit<User, "comparePassword">) {
 }
 
 export async function getUserByUsername(username: User["username"]) {
-  console.log(username);
   return UserModel.findOne({ username });
 }
 
