@@ -1,4 +1,5 @@
 import axios from "axios";
+import React from "react";
 import { createContext, ReactNode, useContext } from "react";
 import { QueryObserverResult, RefetchOptions, RefetchQueryFilters, useQuery } from "react-query";
 import { User } from "./Types";
@@ -20,8 +21,8 @@ function getUser() {
 }
 
 function UserContextProvider({ children }: { children: ReactNode }) {
-  const { data, isLoading, refetch } = useQuery("user", getUser);
-  return <UserContext.Provider value={{ user: data, refetch }}>{isLoading ? <>loading</> : children}</UserContext.Provider>;
+  const { data, refetch } = useQuery("user", getUser);
+  return <UserContext.Provider value={{ user: data, refetch }}>{children}</UserContext.Provider>;
 }
 
 const useUserContext = () => useContext(UserContext);
