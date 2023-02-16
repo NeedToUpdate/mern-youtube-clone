@@ -9,6 +9,9 @@ interface props {
   onSubmit?: Function; //best practices would use this to then pass the data to a handler wrapper
 }
 
+//this isn't best practice to manually write out each form. using something like Mantine is much better, as we can have more complex forms without
+//rewriting to much code. But that is outside the scope of this project, and we just need 4 forms with 2 fields, so copy pasting is ok for now.
+
 export default function LoginForm(props: props) {
   const { refetch } = useUserContext();
   const navigate = useNavigate();
