@@ -66,7 +66,7 @@ const VideoProvider = ({ children }: { children: React.ReactNode }) => {
     getVideos().then((res) => {
       dispatch({ type: VideoActions.Fetch, payload: { videos: res } });
     });
-  }, []);
+  }, [state.initialized]);
   return <VideoContext.Provider value={{ state, dispatch }}>{children}</VideoContext.Provider>;
 };
 

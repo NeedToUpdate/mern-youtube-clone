@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { updateVideo } from "../../api/videos";
 import { useVideoContext, VideoActions } from "../../utils/VideoContext";
 import { Button } from "../basic/Button";
@@ -13,7 +13,7 @@ interface props {
 export default function EditVideoForm(props: props) {
   const { id } = props;
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const { state, dispatch } = useVideoContext();
+  const { dispatch } = useVideoContext();
   const [data, setData] = useState({
     title: "",
     description: "",

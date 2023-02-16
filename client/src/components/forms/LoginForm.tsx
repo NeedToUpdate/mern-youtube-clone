@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../api/users";
 import { useUserContext } from "../../utils/UserContext";
@@ -10,7 +10,7 @@ interface props {
 }
 
 export default function LoginForm(props: props) {
-  const { user, refetch } = useUserContext();
+  const { refetch } = useUserContext();
   const navigate = useNavigate();
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [data, setData] = useState({

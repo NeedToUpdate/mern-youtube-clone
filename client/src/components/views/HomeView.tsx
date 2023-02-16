@@ -1,14 +1,7 @@
-import React, { useEffect } from "react";
 import VideoCarousel from "../videos/VideoCarousel";
-import { useUserContext } from "../../utils/UserContext";
-import { getVideos } from "../../api/videos";
 import { useVideoContext } from "../../utils/VideoContext";
 export default function Home() {
-  const { user, refetch } = useUserContext();
-  const { state, dispatch } = useVideoContext();
-  useEffect(() => {
-    console.log(state.videos);
-  }, []);
+  const { state } = useVideoContext();
   return (
     <div>
       <div className="flex flex-col gap-3 mb-10">

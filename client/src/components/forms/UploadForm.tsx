@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { uploadVideo } from "../../api/videos";
 import { useVideoContext, VideoActions } from "../../utils/VideoContext";
@@ -12,7 +12,7 @@ interface props {
 export default function UploadForm(props: props) {
   const navigate = useNavigate();
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const { state, dispatch } = useVideoContext();
+  const { dispatch } = useVideoContext();
   const [data, setData] = useState({
     title: "",
   });

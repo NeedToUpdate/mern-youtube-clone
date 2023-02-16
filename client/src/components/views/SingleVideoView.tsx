@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "video.js/dist/video-js.css";
 import { useNavigate, useParams } from "react-router-dom";
 import VideoJS from "../videos/VideoPlayer";
-import Player from "video.js/dist/types/player";
 import { videosUri } from "../../utils/URIs";
 import { Video } from "../../utils/Types";
 import { deleteVideo, getVideoById } from "../../api/videos";
@@ -17,17 +16,19 @@ export default function SingleVideoView() {
   const { user, refetch } = useUserContext();
   const [editingMode, setEditingMode] = useState(false);
   const navigate = useNavigate();
-  const { state, dispatch } = useVideoContext();
-  const getVideo = async () => {
+  const { dispatch } = useVideoContext();
+
+  const getVideo = useCallback(async () => {
     if (id) {
       const data = await getVideoById(id);
       setVideoData(data.data.data);
       refetch();
     }
-  };
+  }, [id, refetch]);
+
   useEffect(() => {
     getVideo();
-  }, [id]);
+  }, [id, getVideo]);
 
   const videoJsOptions = {
     autoplay: true,
