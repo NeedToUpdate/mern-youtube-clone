@@ -7,14 +7,13 @@ export interface inputProps {
   label: string;
   type: string;
   required: boolean;
-  invalid: boolean;
+  invalid?: boolean;
   name: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
-  submitted: boolean;
   className?: string;
 }
 export function InputField(props: inputProps) {
-  const { label, submitted, invalid, onChange, className, errors, ...inputProps } = props;
+  const { label, invalid, onChange, className, errors, ...inputProps } = props;
   return (
     <div className={"relative z-0 w-full " + (className || "")}>
       <input

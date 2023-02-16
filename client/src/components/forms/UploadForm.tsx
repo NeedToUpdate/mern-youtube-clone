@@ -39,7 +39,6 @@ export default function UploadForm(props: props) {
         onChange={(ev) => {
           setData((old) => ({ ...old, title: ev.target.value }));
         }}
-        submitted={false}
       ></InputField>
       <input
         type="file"

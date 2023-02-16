@@ -41,7 +41,6 @@ export default function EditVideoForm(props: props) {
         onChange={(ev) => {
           setData((old) => ({ ...old, title: ev.target.value }));
         }}
-        submitted={false}
       ></InputField>
       <InputField
         value={data.description}
@@ -55,7 +54,6 @@ export default function EditVideoForm(props: props) {
         onChange={(ev) => {
           setData((old) => ({ ...old, description: ev.target.value }));
         }}
-        submitted={false}
       ></InputField>
       <div className="flex gap-1">
         <Button

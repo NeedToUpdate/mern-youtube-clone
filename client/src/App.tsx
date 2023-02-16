@@ -1,15 +1,15 @@
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import EditVideoView from "./components/views/SearchView";
-import Home from "./components/views/Home";
-import Login from "./components/views/Login";
+import Home from "./components/views/HomeView";
+import Login from "./components/views/LoginView";
 import Navbar from "./components/Navbar";
-import Register from "./components/views/Register";
+import Register from "./components/views/RegisterView";
 import SingleVideoView from "./components/views/SingleVideoView";
-import Upload from "./components/views/Upload";
+import Upload from "./components/views/UploadView";
 import { UserContextProvider } from "./utils/UserContext";
 import { VideoProvider } from "./utils/VideoContext";
 import SearchView from "./components/views/SearchView";
+
 const queryClient = new QueryClient();
 function App() {
   return (

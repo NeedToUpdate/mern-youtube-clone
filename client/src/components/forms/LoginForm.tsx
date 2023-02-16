@@ -40,7 +40,6 @@ export default function LoginForm(props: props) {
         onChange={(ev) => {
           setData((old) => ({ ...old, username: ev.target.value }));
         }}
-        submitted={false}
       ></InputField>
       <InputField
         value={data.password}
@@ -54,7 +53,6 @@ export default function LoginForm(props: props) {
         onChange={(ev) => {
           setData((old) => ({ ...old, password: ev.target.value }));
         }}
-        submitted={false}
       ></InputField>
 
       <Button
