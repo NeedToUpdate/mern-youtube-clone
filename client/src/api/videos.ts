@@ -38,3 +38,7 @@ export function updateVideo(shortId: string, data: { title?: string; description
 export function deleteVideo(shortId: string) {
   return axios.delete(videosUri + `/${shortId}`);
 }
+
+export function searchVideos(query: string) {
+  return axios.get(videosUri + "/search?" + new URLSearchParams({ query: query }).toString());
+}

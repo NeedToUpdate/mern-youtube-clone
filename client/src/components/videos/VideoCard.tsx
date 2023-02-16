@@ -20,7 +20,7 @@ export default function VideoCard(props: props) {
   //and save it as an image, then allow users to upload their own. Here we just give them a random one from a
   //random thumbnail generator
   return (
-    <Link to={`/watch/${video.shortId}`} className="flex gap-2 flex-col rounded-md overflow-hidden justify-start m-2 shadow-sm hover:shadow-md hover:translate-y-[-1px] duration-200 w-fit">
+    <Link to={`/watch/${video.shortId}`} className="flex gap-2 w-[400px] flex-col rounded-md overflow-hidden justify-start m-2 shadow-sm hover:shadow-md hover:translate-y-[-1px] duration-200 ">
       <img src={`/thumbnails/thumb${getThumbnailFromId(video.shortId)}.jpg`} alt={video.title} width={400} height={180} />
       <p className="font-bold text-lg capitalize ml-4">{video.title}</p>
     </Link>

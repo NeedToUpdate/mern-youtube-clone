@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../utils/UserContext";
 import SearchBar from "./SearchBar";
 
 export default function Navbar() {
   const { user, refetch } = useUserContext();
   const [authorized, setAuthorized] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     console.log(user);
     setAuthorized(user !== null);
@@ -20,7 +21,8 @@ export default function Navbar() {
       </Link>
       <SearchBar
         onSubmit={(query: string) => {
-          console.log(query);
+          //best practices this would be sanitized and made sure its a proper string
+          navigate("/search/" + query);
         }}
       ></SearchBar>
       <div className="spacer flex-1"></div>

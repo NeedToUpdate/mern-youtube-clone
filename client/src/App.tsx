@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import EditVideoView from "./components/views/EditVideoView";
+import EditVideoView from "./components/views/SearchView";
 import Home from "./components/views/Home";
 import Login from "./components/views/Login";
 import Navbar from "./components/Navbar";
@@ -9,6 +9,7 @@ import SingleVideoView from "./components/views/SingleVideoView";
 import Upload from "./components/views/Upload";
 import { UserContextProvider } from "./utils/UserContext";
 import { VideoProvider } from "./utils/VideoContext";
+import SearchView from "./components/views/SearchView";
 const queryClient = new QueryClient();
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/upload" element={<Upload />} />
                 <Route path="/watch/:id" element={<SingleVideoView />} />
-                <Route path="/edit/:id" element={<EditVideoView />} />
+                <Route path="/search/:query" element={<SearchView />} />
               </Routes>
             </Router>
           </VideoProvider>
